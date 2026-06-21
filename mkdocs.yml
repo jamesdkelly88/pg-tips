@@ -37,6 +37,9 @@ theme:
   favicon: images/favicon.png
   features:
     - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+
   icon: 
     logo: simple/postgresql
   palette:
