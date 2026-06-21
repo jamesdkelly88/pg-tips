@@ -20,7 +20,14 @@ Yes - this is the main mode for PostgreSQL, so it does this very well
 
 ### Other options
 
-MySQL, Oracle, SQL Server, DB2, Microsoft Access, SQLite and many others
+- MySQL
+- Oracle
+- SQL Server
+- DB2
+- Microsoft Access
+- SQLite 
+
+and many others...
 
 ### Example
 
@@ -61,7 +68,10 @@ Yes - can create a 2-column table with unique key and value, or a key-value colu
 
 ### Other options
 
-Redis, DynamoDB, etcd, Windows Registry
+- Redis
+- DynamoDB
+- etcd
+- Windows Registry
 
 ### Example
 
@@ -87,3 +97,95 @@ WHERE attr -> 'fiction' = 'true';
 | title | author |
 |---|---|
 | 1984 | George Orwell |
+
+## Document
+
+NoSQL semi-structured data, typically in JSON or XML format, allowing schema flexibility. Good for single record performance but poor relational capabiities.
+
+### Result
+
+Yes - JSON and XML column types available
+
+### Other options
+
+- MongoDB
+- CouchBase
+- Amazon DocumentDB
+
+### Example
+
+``` sql title="document-json.sql"
+CREATE TABLE orders (
+    id serial NOT NULL PRIMARY KEY,
+    info json NOT NULL
+);
+
+INSERT INTO orders (info)
+    VALUES (
+        '{"customer": "James", "items": [
+            {
+                "product": "coffee",
+                "qty": 4
+            }
+        ]}'
+    );
+
+SELECT
+  o.id,
+  o.info ->> 'customer' as customer,
+  i.value ->> 'product' as product,
+  i.value ->> 'qty' as quantity
+FROM orders o,
+LATERAL json_array_elements(o.info -> 'items') i
+```
+
+``` sql title="document-xml.sql"
+CREATE TABLE orders (
+    id serial NOT NULL PRIMARY KEY,
+    info xml NOT NULL
+);
+
+INSERT INTO orders (info)
+VALUES (
+  '<order>
+    <customer>James</customer>
+    <items>
+      <item product="coffee" qty="4" />
+    </items>
+  </order>'
+);
+
+SELECT id,
+  (xpath('order/customer/text()', info))[1] AS customer,
+  (xpath('order/items/item/@product', info))[1] AS product,
+  (xpath('order/items/item/@qty', info))[1] AS quantity
+FROM orders;
+```
+
+| id | customer | product | quantity |
+|---|---|---|---|
+| 1 | James | coffee | 4 |
+
+## Graph
+
+## Wide-Column
+
+## In-Memory
+
+## Time-Series
+
+## Object
+
+## Text-Search
+
+## Spatial
+
+## Blob
+
+## Ledger
+
+## Hierarchical
+
+## Vector
+
+## Embedded
