@@ -19,5 +19,24 @@ Tables, columns and rows. What most people think of when you say database
 **Example:**
 
 ``` sql title="relational.sql"
--- TODO
+CREATE TABLE customers (
+    customer_id int PRIMARY KEY,
+    customer_name varchar(100),
+    country varchar(100)
+);
+CREATE TABLE orders (
+    order_id int PRIMARY KEY,
+    customer_id int REFERENCES customers(customer_id),
+    order_date date
+);
+
+INSERT INTO customers (customer_id, customer_name, country)
+    VALUES (1, 'John Smith', 'UK');
+INSERT INTO orders (order_id, customer_id, order_date)
+    VALUES (1, 1, '2020-01-01');
+
+SELECT *
+FROM customers c
+INNER JOIN orders o
+ON c.customer_id = o.order_id;
 ```
