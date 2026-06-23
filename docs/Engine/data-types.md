@@ -1,7 +1,3 @@
----
-tags:
-- draft
----
 # Data Types
 [^1]: [Data Types](https://www.postgresql.org/docs/current/datatype.html)
 

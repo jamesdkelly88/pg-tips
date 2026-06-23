@@ -1,7 +1,3 @@
----
-tags:
-- draft
----
 # Database Types
 
 I read a fascinating article by Ashish Pratap Singh about [15 types of database and when to use them](https://blog.algomaster.io/p/15-types-of-databases), and it got me thinking about the extensibility of PostgreSQL, and how many of these database types it could act as (or emulate quite closely).

@@ -1,7 +1,3 @@
----
-tags:
-- draft
----
 # New Features
 
 ## 18[^1]
