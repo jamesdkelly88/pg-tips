@@ -1,5 +1,0 @@
-Type,Aliases,Description,Minimum,Maximum,Versions,Example
-bigint,int8,8 byte signed integer,"-2^63 (9.2qi)","2^63-1 (9.2qi)",7.1+,-123456345689345678
-integer,int / int4,4 byte signed integer,-2^31 (2.1bn),2^31-1 (2.1bn),7.1+, 85000000
-smallint,int2,2 byte signed integer,-32768,32767,7.1+, 12345
-uuid,-,128 bit universally unique identifier,-,-,8.3+ (v7 18+),5b30857f-0bfa-48b5-ac0b-5c64e28078d1
