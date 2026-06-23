@@ -83,3 +83,22 @@
         ```
 1. Connect from another machine using `psql`/`pgadmin4` and the credentials created
 1. Install extensions and restart service
+    - apache age (no longer packaged since 3.23)
+        ```sh
+        sudo -s
+        cd ~
+        apk add bison flex make perl postgresql18-dev
+        wget https://dlcdn.apache.org/age/PG18/1.7.0/apache-age-1.7.0-src.tar.gz
+        tar -xvf apache-age-1.7.0-src.tar.gz
+        cd apache-age*
+        make install
+        ```
+    - pg_cron
+        ```sh
+        sudo apk add postgrresql-pg_cron
+        ```
+
+    - restart
+        ```sh
+        sudo rc-service postgresql restart
+        ```
