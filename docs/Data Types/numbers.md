@@ -1,5 +1,7 @@
 # Numbers
 
+## Comparison Table
+
 | Type | Aliases | Size | Range | Since[^1] |
 |---|---|---|---|---|
 | smallint | int2 | 2B | ±32,767 | 6.3 | 
@@ -17,7 +19,38 @@
 [^1]: I've only found documentation online for version 6.3+, so some of these types may have existed earlier. v6.3 was released in 1998 so this is unlikely to have any real significance.
 [^2]: Resized to 8 byte version in `v8.3`
 
-## Numeric
+## Usage
+
+### Declaring
+
+<!-- TODO -->
+
+### Functions
+
+<!-- TODO -->
+
+### Operators
+
+<!-- TODO -->
+
+### Casting
+
+| X | smallint | integer | bigint | numeric | real | double | smallserial | serial | bigserial | money |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| smallint | - | | | | | | | | | |
+| integer | | - | | | | | | | | |
+| bigint | | | - | | | | | | | |
+| | | | | | | | | | | |
+| | | | | | | | | | | |
+| | | | | | | | | | | |
+| | | | | | | | | | | |
+| | | | | | | | | | | |
+| | | | | | | | | | | |
+| | | | | | | | | | | |
+
+## Important Notes
+
+### Numeric
 
 Precise, but slower than other types.
 
@@ -44,7 +77,7 @@ Has special values `Infinity`/`inf`, `-Infinity`/`-inf` and `NaN` - these are ca
 - `NaN` ≠ any other number
 - `NaN` > every other number 
 
-## Floating Point
+### Floating Point
 
 Inexact - can lead to skew and weird equlity results
 
@@ -60,7 +93,7 @@ Supports special values `inf`,`-inf` and `NaN` - see above
 
 Can also be declared as `float(n)`: 1 - 24 -> `real`, 24 - 53 -> `double precision`
 
-## Serial
+### Serial
 
 Not a true type - represents the cretion of a sequence of the underlying integer size
 
@@ -84,5 +117,4 @@ To insert into a `serial`, either omit from the list of columns or specify `defa
 
 If you drop the sequence but not the column, th default expression is removed
 
-## Money
-
+### Money
