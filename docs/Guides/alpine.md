@@ -1,6 +1,6 @@
-# Installing on Alpine
+# Alpine Linux
 
-## Installing Alpine Linux
+## Installing
 
 1. Boot from image/ISO
 1. Login as `root` with no password
@@ -14,8 +14,8 @@
     1. Select NTP client (`busybox`)
     1. Edit `/etc/apk/repositories` by hand:
         ```
-        http://dl-cdn.alpinelinux.org/alpine/v3.23/main
-        http://dl-cdn.alpinelinux.org/alpine/v3.23/community
+        https://dl-cdn.alpinelinux.org/alpine/v3.23/main
+        https://dl-cdn.alpinelinux.org/alpine/v3.23/community
         ```
     1. Setup a user (`james`)
     1. Select SSH server (`openssh`)
@@ -50,7 +50,7 @@
 1. Edit `/etc/postgresql18/postgresql.conf`:
     - Uncomment `#listen_addresses = 'localhost'` and change to `listen_addresses = '*'` to allow network connections
 1. Edit `/etc/postgresql18/pg_hba.conf`:
-    - Change `host all all 127.0.0.1/32 md5` to `host all all 0.0.0.0/0 scram-sha-256` (do not use `md5` as it is insecure and deprecated)
+    - Change `host all all 127.0.0.1/32 trust` to `host all all 0.0.0.0/0 scram-sha-256` (do not use `md5` as it is insecure and deprecated)
 1. Restart the service
     ```sh
     sudo rc-service postgresql restart
@@ -83,22 +83,26 @@
         ```
 1. Connect from another machine using `psql`/`pgadmin4` and the credentials created
 1. Install extensions and restart service
-    - apache age (no longer packaged since 3.23)
+    - personal repository
         ```sh
-        sudo -s
-        cd ~
-        apk add bison flex make perl postgresql18-dev
-        wget https://dlcdn.apache.org/age/PG18/1.7.0/apache-age-1.7.0-src.tar.gz
-        tar -xvf apache-age-1.7.0-src.tar.gz
-        cd apache-age*
-        make install
+        cd /etc/apk/keys
+        sudo wget https://jamesdkelly88.github.io/alpine-apks/jamesdkelly88.rsa.pub
+        echo "@jk https://jamesdkelly88.github.io/alpine-apks/v3.23" | sudo tee -a /etc/apk/repositories
+        sudo apk update
+        ```
+    - apache age
+        ```sh
+        sudo apk add postgresql18-age@jk
         ```
     - pg_cron
         ```sh
-        sudo apk add postgrresql-pg_cron
+        sudo apk add postgresql-pg_cron
         ```
-
     - restart
         ```sh
         sudo rc-service postgresql restart
         ```
+
+## Upgrading Alpine
+
+## Upgrading PostgreSQL
