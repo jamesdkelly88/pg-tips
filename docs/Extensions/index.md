@@ -25,6 +25,7 @@ Because most cloud providers don't grant superuser or filesystem access, adding 
     ```sql
     SELECT * FROM pg_available_extensions;
     ```
+
     | name | default_version | installed_version | comment |
     | --- | --- | --- | --- |
     | autoinc | .0 | [null] | functions for autoincrementing fields |
@@ -70,10 +71,13 @@ Because most cloud providers don't grant superuser or filesystem access, adding 
         ...    
         ```
     - Additional libraries are defined in the `.control` file as `module_pathname`
-    - You can get the location of `LIBDIR` by running `pg_config --libdir` (`/usr/lib`). For the example above, the full path to the module is `/usr/lib.postgresql18/pgxml.so`
+    - You can get the location of `LIBDIR` by running `pg_config --libdir` (`/usr/lib`). For the example above, the full path to the module is `/usr/lib/postgresql18/pgxml.so`
+
+<!-- TODO: update search path -->
 
 
 - Extensions that need loading at startup to register shared memory or lwlocks need adding to the setting `shared_preload_libraries` (comma separated) OR . Updating this setting requires a service restart. Examples include:
+    - age
     - pg_cron
     - pg_stat_statements
 
@@ -82,7 +86,18 @@ Because most cloud providers don't grant superuser or filesystem access, adding 
     CREATE EXTENSION name;
     ```
 
+- Extensions may need loading into the session (`LOAD 'age';`) - this requires superuser permission. These can be preloaded into every session by adding to the `session_preload_libraries` setting. This setting applies to all future sessions without a restart. The other way to avoid superuser permission (but still require a manual load) is to create a symbolic link to the library `age.so` in the `plugins` sub-directory of `LIBDIR`, then loading explicitly: `LOAD '$libdir/plugins/age.so';`.
+    ```sh
+    mkdir $(pg_config --pkglibdir)/plugins
+    ln -s $(pg_config --pkglibdir)/age.so $(pg_config --pkglibdir)/plugins/age.so
+    ```
 
+
+## Availability
+
+| Extension | Alpine | AWS Aurora | AWS RDS | Azure | Debian | Fedora | Neon | RHEL | Ubuntu | Windows |
+| :-- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | 
+| [age](./age.md) |  :ballot_box_with_check: | :x: | :x: | :white_check_mark: | :white_check_mark: | | :x: | | | :x: |
 
 
 ## Structure
