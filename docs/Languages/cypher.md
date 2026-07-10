@@ -1,3 +1,0 @@
-# Cypher
-
-<!-- TODO: language notes -->

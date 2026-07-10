@@ -33,6 +33,11 @@ session_preload_libraries = 'age' # preloads libraries, allows non-superuser usa
 
 ## Usage
 
+Age uses OpenCypher as its query language. The recommended naming conventions[^1] are:
+- PascalCase for node types (labels) 
+- SCREAMING_SNAKE_CASE for edge types
+- camelCase for properties
+
 - Install extension (requires superuser)
     ```sql
     CREATE EXTENSION age; --requires superuser
@@ -54,7 +59,7 @@ session_preload_libraries = 'age' # preloads libraries, allows non-superuser usa
     ```sql
     SELECT * 
     FROM cypher('graph_name', $$
-        CREATE (:node1),(:node2)
+        CREATE (:NodeType1),(:NodeType2)
     $$) as (v agtype);
     ```
 - List vertices
@@ -68,14 +73,14 @@ session_preload_libraries = 'age' # preloads libraries, allows non-superuser usa
 
     | v (agtype) |
     | --- |
-    | "{""id"": 1125899906842625, ""label"": ""node1"", ""properties"": {}}::vertex" |
+    | "{""id"": 1125899906842625, ""label"": ""NodeType1"", ""properties"": {}}::vertex" |
 
 - Create edge
     ```sql
     SELECT * 
     FROM cypher('graph_name', $$
-        MATCH (a:node1), (b:node2)
-        CREATE (a)-[e:RELTYPE]->(b)
+        MATCH (a:Node1), (b:Node2)
+        CREATE (a)-[e:REL_TYPE]->(b)
         RETURN e
     $$) as (e agtype);
     ```
@@ -91,8 +96,8 @@ session_preload_libraries = 'age' # preloads libraries, allows non-superuser usa
 
     | a (agtype) | e (agtype) | b (agtype) |
     | --- | --- | --- |
-    | "{""id"": 1407374883553281, ""label"": ""node2"", ""properties"": {}}::vertex" | "{""id"": 1688849860263937, ""label"": ""RELTYPE"", ""end_id"": 1407374883553281, ""start_id"": 1125899906842626, ""properties"": {}}::edge" | "{""id"": 1125899906842626, ""label"": ""node1"", ""properties"": {}}::vertex" |
-    | "{""id"": 1125899906842626, ""label"": ""node1"", ""properties"": {}}::vertex" | "{""id"": 1688849860263937, ""label"": ""RELTYPE"", ""end_id"": 1407374883553281, ""start_id"": 1125899906842626, ""properties"": {}}::edge" | "{""id"": 1407374883553281, ""label"": ""node2"", ""properties"": {}}::vertex" |
+    | "{""id"": 1407374883553281, ""label"": ""NodeType2"", ""properties"": {}}::vertex" | "{""id"": 1688849860263937, ""label"": ""REL_TYPE"", ""end_id"": 1407374883553281, ""start_id"": 1125899906842626, ""properties"": {}}::edge" | "{""id"": 1125899906842626, ""label"": ""NodeType1"", ""properties"": {}}::vertex" |
+    | "{""id"": 1125899906842626, ""label"": ""NodeType1"", ""properties"": {}}::vertex" | "{""id"": 1688849860263937, ""label"": ""REL_TYPE"", ""end_id"": 1407374883553281, ""start_id"": 1125899906842626, ""properties"": {}}::edge" | "{""id"": 1407374883553281, ""label"": ""NodeType2"", ""properties"": {}}::vertex" |
 
 - Create with properties
 - Filter by property
@@ -101,7 +106,7 @@ session_preload_libraries = 'age' # preloads libraries, allows non-superuser usa
     ```sql
     SELECT * 
     FROM cypher('graph_name', $$
-        MATCH (v:node1)
+        MATCH (v:NodeType1)
         DELETE v
     $$) as (v agtype);
     ```
@@ -111,8 +116,42 @@ session_preload_libraries = 'age' # preloads libraries, allows non-superuser usa
     SELECT * FROM drop_graph('graph_name', true); 
     ```
 
+
+## Bulk Import[^2]
+
+
+
+1. Create a CSV file for each type (label) of node
+2. Create a CSV for each type of edge
+3. Copy files to server - limited to path `/tmp/age/` <!-- TODO: verify this -->
+4. Create graph
+5. Load nodes
+6. Load edges
+7. Count results to confirm
+
+
 ## Sample data
 
 ### London Underground
 
 [Repository](https://github.com/neo4j-partners/neo4j-transport-for-london)
+
+[Transformation script](./age_underground_prep.ps1)
+
+```sql title="Import stations"
+
+```
+
+```sql title="Import line"
+
+```
+
+
+
+
+
+
+
+[^1]: [Naming syntax](https://neo4j.com/docs/cypher-manual/current/syntax/naming/)
+
+[^2]: [Bulk import instructions](https://age.apache.org/age-manual/master/intro/agload.html)
