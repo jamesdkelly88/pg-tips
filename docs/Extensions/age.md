@@ -360,8 +360,13 @@ SELECT agtype_to_text(line) line, edges::int
 
   It is worth noting that this particular query constrains the route to reduce the number of paths returned, so may not be the true shortest route. There is also an issue with the sample data not considering Bank and Monument as the same station, so the only other interchange route returned in "Ealing Broading", 38 stops.
 
+<!-- TODO:
+- fix indenting
+- show process for merging the Bank/Monument nodes -->
 
 ## Visualising
+
+<!-- TODO: -->
 
 
 
