@@ -22,6 +22,7 @@ foreach($s in $data['stations'])
 
 # Export stations to csv
 $data['stations'] | Select-Object -Property id, 
+    @{ n = 'name'; e = { $_.'Station' }}, 
     @{ n = 'osX'; e = { $_.'OS X' }}, 
     @{ n = 'oxY'; e = { $_.'OS Y' }}, 
     @{ n = 'latitude'; e = { $_.Latitude }}, 
@@ -48,3 +49,7 @@ foreach($l in $lines)
         end_id,
         @{ n = 'end_vertex_type'; e = { 'Station' }} | Export-Csv "edges_$($l.Name.ToLower()).csv"
 }
+
+Write-Host "These need loading from the server, so:"
+Write-Host "scp *.csv user@host:/tmp/age"
+Write-Host "Make sure the directory exists first"
