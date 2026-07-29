@@ -1,6 +1,6 @@
 # Apache AGE
 
-Graph database layer using [Cypher](../Languages/cypher.md)
+Graph database layer using [Cypher](https://opencypher.org/)
 
 ## Installation
 
@@ -22,7 +22,7 @@ make install
 
 #### Packaged
 
-See installation on Alpine Linux guide
+See [installation on Alpine Linux guide](../Guides/alpine.md)
 
 ### Settings
 

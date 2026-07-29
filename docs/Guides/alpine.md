@@ -98,8 +98,12 @@
         ```sh
         sudo apk add postgresql-pg_cron
         ```
+    - pg_tle
+        ```sh
+        sudo apk add postgresql-pg_tle
+        ```
     - settings (/etc/postgresql18/postgresql.conf)
-      - update `shared_preload_libraries = 'age,pg_cron'`
+      - update `shared_preload_libraries = 'age,pg_cron,pg_tle'`
       - update `session_preload_libraries = 'age'`
       - add `cron.database_name = 'postgres'`
     - restart

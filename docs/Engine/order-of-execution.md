@@ -1,4 +1,4 @@
-# Order of Execution
+# Order of Execution[^1]
 
 - FROM : specify source table
 - JOIN : specify additional tables

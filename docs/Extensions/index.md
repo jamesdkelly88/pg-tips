@@ -8,7 +8,7 @@ An extension is a package containing scripts, types, functions and compiled C co
 
 Extensions can be either `trusted` or `untrusted`, determined by an entry in the extension's control file (see [structure](#structure)). Only members of the `superuser` role can install untrusted extensions.
 
-Because most cloud providers don't grant superuser or filesystem access, adding extensions that aren't packaged is not possible. To reduce the impact of this, Amazon developed [pg_tle](/docs/Extensions/pg_tle.md) - the trusted language extension provider, which allows extensions to be created and deployed to RDS instances without superuser permissions using trusted languages (PL/pgSQL, JavaScript, or Perl).
+Because most cloud providers don't grant superuser or filesystem access, adding extensions that aren't packaged is not possible. To reduce the impact of this, Amazon developed [pg_tle](pg_tle.md) - the trusted language extension provider, which allows extensions to be created and deployed to RDS instances without superuser permissions using trusted languages (PL/pgSQL, JavaScript, or Perl).
 
 ## Usage
 
@@ -84,6 +84,11 @@ Because most cloud providers don't grant superuser or filesystem access, adding 
 - Install extension to database
     ```sql
     CREATE EXTENSION name;
+    ```
+
+    If extension is relocatable, you can force a different schema:
+    ```sql
+    CREATE EXTENSION name WITH SCHEMA different_schema;
     ```
 
 - Extensions may need loading into the session (`LOAD 'age';`) - this requires superuser permission. These can be preloaded into every session by adding to the `session_preload_libraries` setting. This setting applies to all future sessions without a restart. The other way to avoid superuser permission (but still require a manual load) is to create a symbolic link to the library `age.so` in the `plugins` sub-directory of `LIBDIR`, then loading explicitly: `LOAD '$libdir/plugins/age.so';`.
