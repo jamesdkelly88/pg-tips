@@ -60,7 +60,7 @@ pg_stat_statements.track_planning = on # default is off, planner times show as z
 
 ### What to look for
 
-TODO: once I have some significant usage data
+<!-- TODO: once I have some significant usage data -->
 
 
 

@@ -13,4 +13,4 @@ SELECT version();
 ## Version Table
 [^1]: [endoflife.date](https://endoflife.date/postgresql)
 
-{{ read_csv('data/versions.csv') }}
+{{ read_csv('includes/versions.csv') }}

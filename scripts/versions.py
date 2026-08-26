@@ -3,7 +3,7 @@ response = requests.get('https://endoflife.date/api/v1/products/postgresql/')
 data = response.json()
 releases = data["result"]["releases"]
 
-with open('docs/data/versions.csv', 'w', newline='') as csvfile:
+with open('includes/versions.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=',',
                             quotechar='|', quoting=csv.QUOTE_MINIMAL)
     writer.writerow([
